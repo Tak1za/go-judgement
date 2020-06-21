@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </head>
+
+  <body>
+    <h3>WebSocket Go</h3>
+    <pre id="output"></pre>
+
+    <script>
+      url = 'ws://localhost:8080/ws';
+      c = new WebSocket(url);
+
+      function newData(){
+        json = {
+          totalCards: 5,
+          round: 0,
+          users: ["varun", "rajat"]
+          // table: [],
+          // state: {
+          //   varun: [],
+          //   rajat: []
+          // }
+        }
+
+        return json;
+      }
+      
+      send = function(data){
+        console.log("Sent")
+        console.log(JSON.stringify(data))
+        c.send(JSON.stringify(data))
+      }
+
+      c.onmessage = function(msg){
+        console.log("Received")
+        console.log(msg)
+      }
+
+      c.onopen = function(){
+        send(newData())
+      }
+    </script>
+
+  </body>
+</html>
